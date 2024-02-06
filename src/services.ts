@@ -1,4 +1,6 @@
+import { faker } from "@faker-js/faker";
 import { UserModel } from "./models";
+import { CreateUserInput } from "./types";
 
 const USERS: UserModel[] = [
   {
@@ -19,6 +21,17 @@ const USERS: UserModel[] = [
 ]
 
 export class UserService {
+
+  create(createUserInput: CreateUserInput): UserModel {
+    const userModel: UserModel = {
+      id: faker.string.uuid(),
+      petsId: [],
+      ...createUserInput
+    }
+
+    return userModel;
+  }
+
   list(): UserModel[] {
     return USERS;
   }

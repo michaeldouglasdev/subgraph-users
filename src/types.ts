@@ -8,6 +8,8 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -16,6 +18,34 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   _FieldSet: { input: any; output: any; }
+};
+
+export type CreateUserInput = {
+  name: Scalars['String']['input'];
+};
+
+export type CreateUserResponse = MutationResponse & {
+  __typename?: 'CreateUserResponse';
+  code: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+  user?: Maybe<User>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createUser: CreateUserResponse;
+};
+
+
+export type MutationCreateUserArgs = {
+  data: CreateUserInput;
+};
+
+export type MutationResponse = {
+  code: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
 };
 
 export type Pet = {
@@ -115,25 +145,58 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = ResolversObject<{
+  MutationResponse: ( Omit<CreateUserResponse, 'user'> & { user?: Maybe<RefType['User']> } );
+}>;
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  CreateUserInput: CreateUserInput;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  CreateUserResponse: ResolverTypeWrapper<Omit<CreateUserResponse, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  MutationResponse: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['MutationResponse']>;
   Pet: ResolverTypeWrapper<Pet>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Query: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<UserModel>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  CreateUserInput: CreateUserInput;
+  String: Scalars['String']['output'];
+  CreateUserResponse: Omit<CreateUserResponse, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
+  Int: Scalars['Int']['output'];
+  Boolean: Scalars['Boolean']['output'];
+  Mutation: {};
+  MutationResponse: ResolversInterfaceTypes<ResolversParentTypes>['MutationResponse'];
   Pet: Pet;
   ID: Scalars['ID']['output'];
   Query: {};
   User: UserModel;
-  String: Scalars['String']['output'];
-  Boolean: Scalars['Boolean']['output'];
+}>;
+
+export type CreateUserResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['CreateUserResponse'] = ResolversParentTypes['CreateUserResponse']> = ResolversObject<{
+  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>;
+}>;
+
+export type MutationResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MutationResponse'] = ResolversParentTypes['MutationResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'CreateUserResponse', ParentType, ContextType>;
+  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 }>;
 
 export type PetResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Pet'] = ResolversParentTypes['Pet']> = ResolversObject<{
@@ -155,6 +218,9 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  CreateUserResponse?: CreateUserResponseResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  MutationResponse?: MutationResponseResolvers<ContextType>;
   Pet?: PetResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

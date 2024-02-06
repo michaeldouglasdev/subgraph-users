@@ -4,6 +4,14 @@ type Query {
   users: [User]!
 }
 
+type Mutation {
+  createUser(data: CreateUserInput!): CreateUserResponse!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
 type User @key(fields: "id") {
   id: ID!
   name: String!
@@ -12,4 +20,17 @@ type User @key(fields: "id") {
 
 type Pet @key(fields: "id", resolvable: false) {
   id: ID!
+}
+
+interface MutationResponse {
+  code: Int!
+  message: String!
+  success: Boolean!
+}
+
+type CreateUserResponse implements MutationResponse {
+  code: Int!
+  message: String!
+  success: Boolean!
+  user: User
 }

@@ -9,6 +9,17 @@ export const resolvers: Resolvers = {
       return userService.list();
     }
   },
+  Mutation: {
+    createUser: (parent, args, context, info) => {
+      const user = userService.create(args.data);
+      return {
+        code: 200,
+        message: "User created Succesfully",
+        success: true,
+        user
+      }
+    }
+  },
   User: {
     pets: ({ petsId }) => {
       return petsId.map(petId => ({ id: petId }));
