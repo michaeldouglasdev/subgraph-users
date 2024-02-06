@@ -5,7 +5,7 @@ const USERS: User[] = [
   {
     id: 'user-1',
     name: 'MD',
-    pets: [],
+
   }
 ]
 
@@ -17,12 +17,11 @@ export const resolvers: Resolvers = {
     }
   },
   User: {
-    pets: async ({ id }) => {
-      return [
-        {
-          id
-        }
-      ]
+    pet: ({ id }) => {
+      console.log('id que chegou', id)
+      return {
+        id: 'pet-1'
+      }
     },
     __resolveReference: ({ id }, context) => {
       return USERS.find(user => user.id === id)!;

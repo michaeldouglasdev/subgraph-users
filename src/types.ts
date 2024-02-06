@@ -31,7 +31,7 @@ export type User = {
   __typename?: 'User';
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  pets: Array<Maybe<Pet>>;
+  pet?: Maybe<Pet>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -149,7 +149,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['User']>, { __typename: 'User' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  pets?: Resolver<Array<Maybe<ResolversTypes['Pet']>>, ParentType, ContextType>;
+  pet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
