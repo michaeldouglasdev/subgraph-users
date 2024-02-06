@@ -14,7 +14,8 @@ async function bootstrap() {
     schema: buildSubgraphSchema({
       typeDefs: schema,
       resolvers,
-    })
+    }),
+    introspection: true,
   })
 
   const { url } = await startStandaloneServer(server, {
