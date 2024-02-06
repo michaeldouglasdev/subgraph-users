@@ -1,7 +1,11 @@
 import { ApolloServer } from '@apollo/server';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { resolvers } from './src/resolvers';
-import { schema } from './src/schema';
+import {gql} from 'graphql-tag';
+import { readFileSync } from 'fs';
+
+const schema = gql(readFileSync('./src/schema.graphql', { encoding: 'utf-8' }));
+
 import { startStandaloneServer } from '@apollo/server/standalone';
 import dotenv from 'dotenv';
 dotenv.config();

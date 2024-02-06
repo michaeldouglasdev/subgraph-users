@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "publish-schema": "rover subgraph publish md-federation@current --name users --schema ./src/schema.graphql --routing-url https://subgraph-users-925396c1ddbe.herokuapp.com/",
     "codegen": "graphql-codegen",
     "start": "tsx watch server.ts"
   },
