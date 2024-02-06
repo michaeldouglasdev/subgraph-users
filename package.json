@@ -1,0 +1,24 @@
+{
+  "name": "subgraph-users",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graphql-codegen",
+    "start": "tsx watch server.ts"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-resolvers": "^4.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.10.0",
+    "@apollo/subgraph": "^2.7.1",
+    "dotenv": "^16.4.1",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6"
+  }
+}
