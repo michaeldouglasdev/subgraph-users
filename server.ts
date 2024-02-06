@@ -22,7 +22,7 @@ async function bootstrap() {
       port: PORT
     }
   })
-  console.log(`GraphQL Server started at ${url}!!!`);
+  console.log(`GraphQL Server started at ${url}`);
 }
 
 bootstrap();
