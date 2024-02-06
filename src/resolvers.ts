@@ -1,30 +1,20 @@
-import { GetUserService } from "./services";
+import { UserService } from "./services";
 import { Resolvers, User } from "./types";
 
-const USERS: User[] = [
-  {
-    id: 'user-1',
-    name: 'MD',
-
-  }
-]
+const userService = new UserService();
 
 export const resolvers: Resolvers = {
   Query: {
     users: (parent, args, context, info) => {
-      //return new GetUserService().execute();
-      return USERS;
+      return userService.list();
     }
   },
   User: {
-    pet: ({ id }) => {
-      console.log('id que chegou', id)
-      return {
-        id: 'pet-1'
-      }
+    pets: ({ petsId }) => {
+      return petsId.map(petId => ({ id: petId }));
     },
     __resolveReference: ({ id }, context) => {
-      return USERS.find(user => user.id === id)!;
+      return userService.getById(id);
     }
   }
 }

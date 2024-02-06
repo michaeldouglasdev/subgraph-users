@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { UserModel } from './models';
 import { Context } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -31,7 +32,7 @@ export type User = {
   __typename?: 'User';
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  pet?: Maybe<Pet>;
+  pets: Array<Maybe<Pet>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -120,7 +121,7 @@ export type ResolversTypes = ResolversObject<{
   Pet: ResolverTypeWrapper<Pet>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Query: ResolverTypeWrapper<{}>;
-  User: ResolverTypeWrapper<User>;
+  User: ResolverTypeWrapper<UserModel>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 }>;
@@ -130,7 +131,7 @@ export type ResolversParentTypes = ResolversObject<{
   Pet: Pet;
   ID: Scalars['ID']['output'];
   Query: {};
-  User: User;
+  User: UserModel;
   String: Scalars['String']['output'];
   Boolean: Scalars['Boolean']['output'];
 }>;
@@ -149,7 +150,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['User']>, { __typename: 'User' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  pet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType>;
+  pets?: Resolver<Array<Maybe<ResolversTypes['Pet']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

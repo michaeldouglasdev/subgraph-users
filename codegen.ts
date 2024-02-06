@@ -8,7 +8,10 @@ const codegen: CodegenConfig = {
       config: {
         federation: true,
         useIndexSignature: true,
-        contextType: './context#Context'
+        contextType: './context#Context',
+        mappers: {
+          User: './models#UserModel'
+        }
       }
     }
   },
