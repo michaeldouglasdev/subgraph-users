@@ -15,12 +15,12 @@ input CreateUserInput {
 type User @key(fields: "id") {
   id: ID!
   name: String!
-  pets: [Pet]!
+  #pets: [Pet]!
 }
 
-type Pet @key(fields: "id", resolvable: false) {
-  id: ID!
-}
+#type Pet @key(fields: "id", resolvable: false) {
+ # id: ID!
+#}
 
 interface MutationResponse {
   code: Int!

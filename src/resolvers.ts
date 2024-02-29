@@ -21,10 +21,10 @@ export const resolvers: Resolvers = {
     }
   },
   User: {
-    pets: ({ petsId }) => {
+    /*pets: ({ petsId }) => {
       return petsId.map(petId => ({ id: petId }));
-    },
-    __resolveReference: ({ id }, context) => {
+    },*/
+    __resolveReference: ({ id }) => {
       return userService.getById(id);
     }
   }
